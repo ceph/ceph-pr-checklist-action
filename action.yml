@@ -1,0 +1,8 @@
+name: 'Ceph PR checklist'
+description: 'Verify a PR has completed checklist items'
+outputs:
+  errors:
+    description: 'Items still needing attention'
+runs:
+  using: 'node12'
+  main: 'checklist.js'
