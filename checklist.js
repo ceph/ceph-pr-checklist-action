@@ -14,11 +14,13 @@ const axios = require('axios');
 	}
 	
 	let errors = [];
+	let sawChecklist = false;
 	for (var i = 0; i < lines.length; ++i) {
 	    //console.log(`line ${i} is "${lines[i]}"`);
 	    if (lines[i] == '## Checklist'
 		&& i < lines.length - 2) {
 		++i;
+		sawChecklist = true;
 		while (lines[i][0] == '-') {
 		    const section = lines[i].substring(2).split(' (')[0];
 		    ++i;
@@ -45,6 +47,9 @@ const axios = require('axios');
 		core.error(err);
 	    }
 	    core.setFailed(`${errors.length} sections incomplete`);
+	}
+	if (!sawChecklist) {
+	    core.warning('Did not encounter a checklist in this pull request');
 	}
     } catch (error) {
 	console.log(`Error: ${error.message}`);
