@@ -28,7 +28,7 @@ const axios = require('axios');
 		    let checked = false;
 		    while (lines[i].substring(0, 5) == '  - [' &&
 			   lines[i][6] == ']') {
-			if (lines[i][5] == 'x') {
+			if (lines[i][5] == 'x' || lines[i][5] == 'X') {
 			    checked = true;
 			}
 			++i;
