@@ -1,8 +1,13 @@
-name: 'Ceph PR checklist'
-description: 'Verify a PR has completed checklist items'
-outputs:
-  errors:
-    description: 'Items still needing attention'
+name: "Ceph PR checklist"
+description: "Verify a PR has completed checklist items"
 runs:
-  using: 'node12'
-  main: 'checklist.js'
+  using: "composite"
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.13"
+    - name: Check
+      id: check
+      run: "echo '${{ github.event.pull_request.body }}' | python3 $GITHUB_ACTION_PATH/checklist.py"
+      shell: bash
