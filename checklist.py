@@ -20,8 +20,10 @@ def parse(data):
     section_checks = {}
     success = True
     for line in lines:
-        if line == "## Checklist":
+        if line.strip() == "## Checklist":
             saw_checklist = True
+            continue
+        if not saw_checklist:
             continue
 
         if match := re.match(section_re, line):
@@ -37,8 +39,6 @@ def parse(data):
             if maybe_check in check_chars:
                 print(f"  Item is checked: {match.groups()[1]}")
                 section_checks[section] += 1
-        elif saw_checklist:
-            break
 
     for section in mandatory_sections:
         if section_checks.setdefault(section, 0) == 0:
