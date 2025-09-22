@@ -9,5 +9,7 @@ runs:
         python-version: "3.13"
     - name: Check
       id: check
-      run: "echo '${{ github.event.pull_request.body }}' | python3 $GITHUB_ACTION_PATH/checklist.py"
+      env:
+        PR_BODY: "${{ github.event.pull_request.body }}"
+      run: 'echo "$PR_BODY" | python3 $GITHUB_ACTION_PATH/checklist.py'
       shell: bash
